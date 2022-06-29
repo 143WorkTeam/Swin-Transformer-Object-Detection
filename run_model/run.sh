@@ -17,8 +17,7 @@ python tools/test.py\
  configs/swin/cascade_mask_rcnn_swin_base_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py \
  checkpoints/cascade_mask_rcnn_swin_base_patch4_window7.pth \
  --show \
- --work-dir=results \
- --eval="bbox" \
+ --eval= bbox segm
 # train on smaller files for better debug
 python -m exps.make_smaller_coco
 
