@@ -22,14 +22,15 @@ python tools/test.py\
 python -m exps.make_smaller_coco
 
 python tools/train.py \
-    configs/faster_rcnn/cascade_mask_rcnn_swin_base_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py \
+    configs/swin/cascade_mask_rcnn_swin_base_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py \
     --auto-scale-lr \
     --cfg-options auto_scale_lr.base_batch_size=8 \
                     data.workers_per_gpu=8 \
-                    data.samples_per_gpu=12 \
-                    log_config.interval=100 \
-                    runner.max_epochs=3 \
+                    data.samples_per_gpu=8 \
+                    log_config.interval=50 \
+                    runner.max_epochs=2 \
                     data.train.ann_file='/mnt/coco/annotations/instances_train2017.small.json' \
+                    load_from="cascade_mask_rcnn_swin_base_patch4_window7.pth"
     --work-dir=cps
 # run all
 python tools/train.py \
