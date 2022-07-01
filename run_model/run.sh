@@ -16,6 +16,7 @@ wget https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_ba
 python tools/test.py\
  configs/swin/cascade_mask_rcnn_swin_base_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py \
  checkpoints/cascade_mask_rcnn_swin_base_patch4_window7.pth \
+ --out=results \
  --show \
  --eval bbox segm
 # train on smaller files for better debug
@@ -23,15 +24,14 @@ python -m exps.make_smaller_coco
 
 python tools/train.py \
     configs/swin/cascade_mask_rcnn_swin_base_patch4_window7_mstrain_480-800_giou_4conv1f_adamw_3x_coco.py \
-    --auto-scale-lr \
-    --cfg-options auto_scale_lr.base_batch_size=8 \
-                    data.workers_per_gpu=8 \
-                    data.samples_per_gpu=8 \
+    --work-dir=cps \
+    --cfg-options data.workers_per_gpu=8 \
+                    data.samples_per_gpu=4 \
                     log_config.interval=50 \
                     runner.max_epochs=2 \
                     data.train.ann_file='/mnt/coco/annotations/instances_train2017.small.json' \
-                    load_from="cascade_mask_rcnn_swin_base_patch4_window7.pth"
-    --work-dir=cps
+                    load_from="checkpoints/cascade_mask_rcnn_swin_base_patch4_window7.pth"
+    
 # run all
 python tools/train.py \
     configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py \
